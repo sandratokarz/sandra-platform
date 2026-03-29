@@ -11,13 +11,21 @@
   --pm: #A78BFA;
   --coral: #F4A8A8;
   --cream: #F5F0E8;
-  --cream2: #EDE8DF;
+  --cream2: #EDE9FE;
   --nav: #1A1A2E;
   --side: #1E1B35;
+  --side2: #252246;
   --txt: #1A1A2E;
   --txt2: #5B5680;
   --txt3: #9B96C0;
   --green: #1D9E75;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #1A1A2E;
+  overflow-x: hidden;
 }
 
 body {

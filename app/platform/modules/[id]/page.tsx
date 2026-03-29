@@ -20,7 +20,7 @@ const s = {
   nav: { display: 'flex', gap: '8px', marginTop: '14px' },
   btn: { background: '#7B5CF5', color: '#fff', border: 'none', borderRadius: '7px', padding: '8px 16px', fontSize: '13px', fontWeight: 700, cursor: 'pointer', fontFamily: 'Inter, sans-serif' },
   btnGhost: { background: 'transparent', color: '#7B5CF5', border: '1px solid #7B5CF5', borderRadius: '7px', padding: '8px 16px', fontSize: '13px', cursor: 'pointer', fontFamily: 'Inter, sans-serif' },
-  chip: { display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '10px', color: '#5B5680', background: '#EDE8DF', borderRadius: '5px', padding: '2px 7px' },
+  chip: { display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '10px', color: '#5B5680', background: '#EDE9FE', borderRadius: '5px', padding: '2px 7px' },
   chipDot: { width: '4px', height: '4px', borderRadius: '50%', background: '#7B5CF5', display: 'inline-block' },
   outcome: { background: '#EDFAF5', border: '1px solid rgba(29,158,117,0.2)', borderRadius: '7px', padding: '8px 11px', marginTop: '8px' },
   quote: { background: '#EDE9FE', borderLeft: '3px solid #7B5CF5', borderRadius: '0 8px 8px 0', padding: '10px 13px', fontSize: '14px', color: '#4C1D95', fontStyle: 'italic' as const, lineHeight: 1.6, marginBottom: '14px' },
@@ -34,11 +34,36 @@ const s = {
 function M1({ router }: { router: ReturnType<typeof useRouter> }) {
   const [step, setStep] = useState(0)
   const sfData = [
-    { title: 'Priorities — Define where AI should matter', body: 'You don\'t start with tools. You start with business tension. Align with leaders to identify where time is lost, quality is inconsistent, or scale is needed. Output: 3–5 AI focus areas (e.g. proposal creation, research, automation).', q: '"If it doesn\'t tie to revenue, efficiency, or risk — it\'s not a priority."' },
-    { title: 'Use Cases — Ground learning in real work', body: 'Identify 5–10 specific use cases with the highest adoption potential. Each must be role-relevant, tool-ready, and measurable. Consultants: proposal drafting. Leaders: meeting prep. Internal: data summarisation.', q: '"Generic AI training doesn\'t change behavior. Use cases do."' },
-    { title: 'Learning — Design for performance, not completion', body: 'Build short, workflow-embedded learning moments around each use case. 5–10 min max. Immediate practice. Manager-supported. Not one-off events — continuous reinforcement.', q: '"Learning is only valuable if it changes what people do on Monday morning."' },
-    { title: 'Adoption — Drive behaviour change', body: 'Adoption requires more than access. Champions, manager check-ins, team challenges, and visible success stories create the social proof and accountability that drives sustained behaviour change.', q: '"Adoption is a design problem, not a motivation problem."' },
-    { title: 'Impact — Measure what matters', body: 'Track across three layers: adoption (are people using AI?), behaviour (are they working differently?), and business impact (time saved, quality improved). Use data to refine continuously.', q: '"The strategy evolves based on real usage and performance data — not assumptions."' },
+    {
+      title: 'Priorities — Define where AI should matter',
+      body: 'You don\'t start with tools. You start with business tension. Align with leaders to identify where time is lost, quality is inconsistent, or scale is needed.',
+      output: 'Output: 3–5 AI focus areas (e.g. proposal creation, research, automation).',
+      q: '"If it doesn\'t tie to revenue, efficiency, or risk — it\'s not a priority."',
+    },
+    {
+      title: 'Use Cases — Ground learning in real work',
+      body: 'Identify 5–10 specific use cases with the highest adoption potential. Each must be role-relevant, tool-ready, and measurable.',
+      bullets: ['Consultants: proposal drafting', 'Leaders: meeting prep', 'Internal: data summarisation'],
+      q: '"Generic AI training doesn\'t change behavior. Use cases do."',
+    },
+    {
+      title: 'Learning — Design for performance, not completion',
+      body: 'Build short, workflow-embedded learning moments around each use case.',
+      bullets: ['5–10 min max', 'Immediate practice', 'Manager-supported', 'Not one-off events — continuous reinforcement'],
+      q: '"Learning is only valuable if it changes what people do on Monday morning."',
+    },
+    {
+      title: 'Adoption — Drive behaviour change',
+      body: 'Adoption requires more than access. Champions, manager check-ins, team challenges, and visible success stories create the social proof and accountability that drives sustained behaviour change.',
+      q: '"Adoption is a design problem, not a motivation problem."',
+    },
+    {
+      title: 'Impact — Measure what matters',
+      body: 'Track across three layers:',
+      bullets: ['Adoption — are people using AI?', 'Behaviour — are they working differently?', 'Business impact — time saved, quality improved'],
+      output: 'Use data to refine continuously.',
+      q: '"The strategy evolves based on real usage and performance data — not assumptions."',
+    },
   ]
   const [sfStep, setSfStep] = useState(0)
 
@@ -85,7 +110,7 @@ function M1({ router }: { router: ReturnType<typeof useRouter> }) {
           <div style={s.title}>The Strategy Model</div>
           <div style={s.body}>Each step in the chain is interdependent. Click any step to explore how it works in practice.</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '12px', flexWrap: 'wrap' as const }}>
-            {sfData.map((sf, i) => (
+            {sfData.map((_sf, i) => (
               <React.Fragment key={i}>
                 <div onClick={() => setSfStep(i)} style={{ cursor: 'pointer', background: sfStep === i ? '#7B5CF5' : '#fff', border: `1px solid ${sfStep === i ? '#7B5CF5' : 'rgba(0,0,0,0.08)'}`, borderRadius: '8px', padding: '8px 11px', transition: 'all .15s' }}>
                   <div style={{ fontSize: '12px', fontWeight: 600, color: sfStep === i ? '#fff' : '#1A1A2E' }}>{['Priorities', 'Use Cases', 'Learning', 'Adoption', 'Impact'][i]}</div>
@@ -96,8 +121,18 @@ function M1({ router }: { router: ReturnType<typeof useRouter> }) {
             ))}
           </div>
           <div style={{ background: '#EDE9FE', border: '1px solid rgba(123,92,245,0.2)', borderRadius: '10px', padding: '1rem', marginBottom: '12px' }}>
-            <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 700, color: '#4C1D95', marginBottom: '6px' }}>{sfData[sfStep].title}</div>
-            <div style={{ fontSize: '13px', color: '#1A1A2E', lineHeight: 1.65, marginBottom: '8px' }}>{sfData[sfStep].body}</div>
+            <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 700, color: '#4C1D95', marginBottom: '8px' }}>{sfData[sfStep].title}</div>
+            <div style={{ fontSize: '13px', color: '#1A1A2E', lineHeight: 1.65, marginBottom: sfData[sfStep].bullets || sfData[sfStep].output ? '8px' : '0' }}>{sfData[sfStep].body}</div>
+            {sfData[sfStep].bullets && (
+              <ul style={{ margin: '0 0 8px 0', paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                {sfData[sfStep].bullets.map((b: string) => (
+                  <li key={b} style={{ fontSize: '13px', color: '#1A1A2E', lineHeight: 1.55 }}>{b}</li>
+                ))}
+              </ul>
+            )}
+            {sfData[sfStep].output && (
+              <div style={{ fontSize: '13px', color: '#4C1D95', fontWeight: 600, marginBottom: '8px' }}>{sfData[sfStep].output}</div>
+            )}
             <div style={{ fontSize: '13px', color: '#7B5CF5', fontStyle: 'italic', borderLeft: '2px solid #7B5CF5', paddingLeft: '8px' }}>{sfData[sfStep].q}</div>
           </div>
           <div style={s.nav}><button style={s.btnGhost} onClick={() => setStep(0)}>← Back</button><button style={s.btn} onClick={() => setStep(2)}>Next →</button></div>
@@ -169,7 +204,7 @@ function M2({ router }: { router: ReturnType<typeof useRouter> }) {
                 <div style={{ padding: '10px 11px' }}>
                   <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', fontWeight: 700, color: '#1A1A2E', marginBottom: '2px', lineHeight: 1.3 }}>{role.title}</div>
                   <div style={{ fontSize: '11px', color: '#5B5680' }}>{role.sub}</div>
-                  <div style={{ fontSize: '10px', padding: '2px 6px', borderRadius: '5px', marginTop: '5px', display: 'inline-block', background: activeRole === i ? '#EDE9FE' : '#EDE8DF', color: activeRole === i ? '#4C1D95' : '#9B96C0' }}>{activeRole === i ? 'Active' : 'Click to view'}</div>
+                  <div style={{ fontSize: '10px', padding: '2px 6px', borderRadius: '5px', marginTop: '5px', display: 'inline-block', background: activeRole === i ? '#EDE9FE' : '#EDE9FE', color: activeRole === i ? '#4C1D95' : '#9B96C0' }}>{activeRole === i ? 'Active' : 'Click to view'}</div>
                 </div>
               </div>
             ))}
@@ -196,9 +231,9 @@ function M2({ router }: { router: ReturnType<typeof useRouter> }) {
           <div style={s.card}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
               <div><div style={{ fontSize: '12px', fontWeight: 600, color: '#1A1A2E', marginBottom: '3px' }}>Prosus — Finance Growth Curriculum</div><div style={{ fontSize: '12px', color: '#5B5680', lineHeight: 1.5 }}>Built role-based curriculum for Finance aligned to capability goals and career stages. Learning became purposeful, not generic.</div></div>
-              <div><div style={{ fontSize: '12px', fontWeight: 600, color: '#1A1A2E', marginBottom: '3px' }}>Booking.com — Capability Maps</div><div style={{ fontSize: '12px', color: '#5B5680', lineHeight: 1.5 }}>Implemented capability learning maps for 18k associates as part of a full career framework. People could see their growth path clearly.</div></div>
+              <div><div style={{ fontSize: '12px', fontWeight: 600, color: '#1A1A2E', marginBottom: '3px' }}>Booking.com — Capability Maps</div><div style={{ fontSize: '12px', color: '#5B5680', lineHeight: 1.5 }}>Implemented capability learning maps for finance department as part of a full career framework. People could see their growth path clearly.</div></div>
             </div>
-            <div style={{ display: 'flex', gap: '5px' }}><span style={s.chip}><span style={s.chipDot} />Prosus 2020–24</span><span style={s.chip}><span style={s.chipDot} />Booking.com 2017–24</span><span style={s.chip}><span style={s.chipDot} />18k associates</span></div>
+            <div style={{ display: 'flex', gap: '5px' }}><span style={s.chip}><span style={s.chipDot} />Prosus 2020–24</span><span style={s.chip}><span style={s.chipDot} />Booking.com 2017–19</span></div>
           </div>
           <div style={s.nav}><button style={s.btnGhost} onClick={() => setStep(0)}>← Back</button><button style={s.btn} onClick={() => router.push('/platform/modules/m3')}>Next module →</button></div>
         </>}
