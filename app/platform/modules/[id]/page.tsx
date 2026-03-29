@@ -257,7 +257,7 @@ function M3({ router }: { router: ReturnType<typeof useRouter> }) {
 {"title":"...","overview":"2 sentences","modules":[{"number":1,"title":"...","duration":"...","format":"...","description":"2 sentences","objectives":["...","..."],"activity":"one specific practical activity"}],"outcomes":"2-3 sentences"}
 3-4 modules. Role-specific, immediately applicable. Return ONLY valid JSON.`
     try {
-      const r = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1200, system: sys, messages: [{ role: 'user', content: `Challenge: ${challenge}\nAudience: ${audience}\nFormat: ${format}` }] }) })
+      const r = await fetch('/api/generate', { method: 'POST', body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1200, system: sys, messages: [{ role: 'user', content: `Challenge: ${challenge}\nAudience: ${audience}\nFormat: ${format}` }] }) })
       const d = await r.json()
       const prog = JSON.parse(d.content?.[0]?.text.replace(/```json|```/g, '').trim() || '{}')
       setResult(prog)
@@ -282,13 +282,13 @@ function M3({ router }: { router: ReturnType<typeof useRouter> }) {
         {step === 0 && <>
           <div style={s.eye}>Page 1 of 2 — AI Toolkit Generator</div>
           <div style={s.title}>Practical content designed for real work</div>
-          <div style={s.body}>Describe your learning challenge — the AI generates a full programme using Sandra's design approach: role-specific, behaviour-focused, immediately applicable.</div>
+          <div style={s.body}>Describe your learning challenge, the AI generates a full programme using Sandra's design approach: role-specific, behaviour-focused, immediately applicable.</div>
           <div style={s.card}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
               <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: '#EDE9FE', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px' }}>✦</div>
               <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 700, color: '#1A1A2E' }}>AI Programme Builder</div>
             </div>
-            <div style={{ fontSize: '13px', color: '#5B5680', marginBottom: '10px', lineHeight: 1.6 }}>Input your challenge and audience — get a full learning programme with modules, objectives, and activities.</div>
+            <div style={{ fontSize: '13px', color: '#5B5680', marginBottom: '10px', lineHeight: 1.6 }}>Input your challenge and audience to get a full learning programme with modules, objectives, and activities.</div>
             <textarea rows={2} value={challenge} onChange={e => setChallenge(e.target.value)} placeholder="e.g. 'KF consultants need to use AI tools in client projects but are resistant to starting'" style={{ width: '100%', background: '#F5F0E8', border: '1px solid rgba(0,0,0,0.07)', borderRadius: '7px', padding: '8px 11px', fontSize: '13px', color: '#1A1A2E', fontFamily: 'Inter, sans-serif', outline: 'none', resize: 'none', marginBottom: '8px', boxSizing: 'border-box' }} />
             <div style={{ display: 'flex', gap: '7px', flexWrap: 'wrap' as const }}>
               <select value={audience} onChange={e => setAudience(e.target.value)} style={{ background: '#F5F0E8', border: '1px solid rgba(0,0,0,0.07)', borderRadius: '6px', padding: '5px 9px', fontSize: '12px', color: '#5B5680', fontFamily: 'Inter, sans-serif', outline: 'none' }}>
@@ -320,17 +320,11 @@ function M3({ router }: { router: ReturnType<typeof useRouter> }) {
         {step === 1 && <>
           <div style={s.eye}>Page 2 of 2 — My Experience</div>
           <div style={s.title}>Toolkits built in real organisations</div>
-          <div style={{ ...s.card, marginBottom: '8px' }}>
-            <div style={{ fontSize: '10px', color: '#A78BFA', fontWeight: 500, letterSpacing: '0.06em', marginBottom: '5px' }}>Sample 1 · Booking.com · 2019</div>
-            <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 700, color: '#1A1A2E', marginBottom: '6px' }}>Global Hiring Manager Toolkit</div>
-            <div style={{ fontSize: '12px', color: '#5B5680', lineHeight: 1.5, marginBottom: '8px' }}>eLearning + competency toolkit for 18k associates. Became the global standard from day one of launch.</div>
-            <span style={s.chip}><span style={s.chipDot} />18k associates · global standard</span>
-          </div>
           <div style={s.card}>
-            <div style={{ fontSize: '10px', color: '#1D9E75', fontWeight: 500, letterSpacing: '0.06em', marginBottom: '5px' }}>Sample 2 · Prosus · 2021</div>
-            <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 700, color: '#1A1A2E', marginBottom: '6px' }}>Inclusion Workshop Programme</div>
-            <div style={{ fontSize: '12px', color: '#5B5680', lineHeight: 1.5, marginBottom: '8px' }}>Full workshop design with facilitation guide, action planning toolkit, leadership reporting. 10+ point improvement in engagement scores. Rolled out globally.</div>
-            <span style={s.chip}><span style={s.chipDot} />Prosus · global rollout · &gt;10pt improvement</span>
+            <div style={{ fontSize: '10px', color: '#A78BFA', fontWeight: 500, letterSpacing: '0.06em', marginBottom: '5px' }}>Booking.com · 2019</div>
+            <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 700, color: '#1A1A2E', marginBottom: '6px' }}>Global Hiring Manager Toolkit</div>
+            <div style={{ fontSize: '12px', color: '#5B5680', lineHeight: 1.5, marginBottom: '8px' }}>A key strategic priority was underway: a full upgrade of the global hiring process across 18,000 associates. As the L&D representative in the project team, I was tasked with designing the learning experience to ensure every hiring manager and recruiter was trained and ready before go-live. I built a suite of online modules in partnership with vendors, complemented by toolkits and job aids embedded in the workflow. The result was full coverage across all hiring managers and recruiters globally, from day one of launch it became the internal standard.</div>
+            <span style={s.chip}><span style={s.chipDot} />18k associates · global standard</span>
           </div>
           <div style={s.nav}><button style={s.btnGhost} onClick={() => setStep(0)}>← Back</button><button style={s.btn} onClick={() => router.push('/platform/modules/m4')}>Next module →</button></div>
         </>}
@@ -340,42 +334,60 @@ function M3({ router }: { router: ReturnType<typeof useRouter> }) {
 }
 
 function M4({ router }: { router: ReturnType<typeof useRouter> }) {
+  const [step, setStep] = useState(0)
   return (
     <div style={s.shell}>
       <div style={s.left}>
         <button style={s.back} onClick={() => router.push('/platform')}>← Back to path</button>
         <div style={s.num}>MODULE 04</div>
         <div style={s.mlTitle}>Facilitation That Engages & Scales</div>
-        <div style={s.step(true)}><div style={s.dot(true)} /><span style={s.stepTxt}>Track record</span></div>
+        {['Track record', 'My experience'].map((t, i) => (
+          <div key={i} style={s.step(step === i)} onClick={() => setStep(i)}>
+            <div style={s.dot(step === i)} /><span style={s.stepTxt}>{t}</span>
+          </div>
+        ))}
         <div style={s.upNext}><div style={s.upNextLbl}>UP NEXT</div><div style={s.upNextItem}><div style={s.dot(false)} />AI Network</div></div>
       </div>
       <div style={s.right}>
-        <div style={s.eye}>Module 04 — Delivery & Facilitation</div>
-        <div style={s.title}>Facilitation is the art of creating conditions where people genuinely change</div>
-        <div style={s.body}>10+ years across every level — from blue collar operators to C-suite executives. In person and virtual. Across 5 countries and 4 languages.</div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
-          {[
-            { title: 'Executive workshops', desc: 'C-suite AI strategy sessions and leadership development programmes', chip: 'Mibelle · Prosus · KF-ready' },
-            { title: '750 people on stage', desc: 'Held a full keynote at Booking.com Finance conference', chip: 'Booking.com · 2019' },
-            { title: 'Global facilitation', desc: 'FranklinCovey Change & Leadership training across all Mibelle regions', chip: 'Mibelle · 2024–25' },
-            { title: 'Preopening simulations', desc: 'Strategic planning with GMs and executive teams at Starwood · 54k associates', chip: 'Starwood · EAME · 2014–19' },
-          ].map(c => (
-            <div key={c.title} style={s.card}>
-              <div style={{ fontSize: '12px', fontWeight: 600, color: '#1A1A2E', marginBottom: '3px' }}>{c.title}</div>
-              <div style={{ fontSize: '12px', color: '#5B5680', lineHeight: 1.5, marginBottom: '6px' }}>{c.desc}</div>
-              <span style={s.chip}><span style={s.chipDot} />{c.chip}</span>
-            </div>
-          ))}
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '14px' }}>
-          {['Certified vILT instructor — online facilitation at scale', 'Master Train the Trainer — developing facilitators across organisations', '5 languages · delivered in English, German, Polish and via interpreters'].map(t => (
-            <div key={t} style={{ display: 'flex', alignItems: 'center', gap: '10px', background: '#fff', borderRadius: '8px', padding: '9px 12px', border: '1px solid rgba(0,0,0,0.07)' }}>
-              <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: '#378ADD', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', color: '#fff', flexShrink: 0 }}>✓</div>
-              <div style={{ fontSize: '13px', color: '#1A1A2E' }}>{t}</div>
-            </div>
-          ))}
-        </div>
-        <div style={s.nav}><button style={s.btn} onClick={() => router.push('/platform/modules/m5')}>Next module →</button></div>
+        {step === 0 && <>
+          <div style={s.eye}>Module 04 — Delivery & Facilitation</div>
+          <div style={s.title}>Facilitation is the art of creating conditions where people genuinely change</div>
+          <div style={s.body}>10+ years across every level — from blue collar operators to C-suite executives. In person and virtual. Delivered globally in 3 languages.</div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
+            {[
+              { title: 'Workshops', desc: 'Delivered virtual and in person team development workshops, certifications, train the trainer workshops.', chip: 'Mibelle · Prosus · Starwood' },
+              { title: 'Keynote Speech', desc: 'Held a full keynote at Booking.com Global conference with over 750 attendees.', chip: 'Booking.com' },
+              { title: 'Global facilitation', desc: 'FranklinCovey Change & Leadership training across all Mibelle regions', chip: 'Mibelle Group' },
+              { title: 'Preopening simulations', desc: 'Strategic planning with GMs and executive teams at Starwood', chip: 'Starwood' },
+            ].map(c => (
+              <div key={c.title} style={s.card}>
+                <div style={{ fontSize: '12px', fontWeight: 600, color: '#1A1A2E', marginBottom: '3px' }}>{c.title}</div>
+                <div style={{ fontSize: '12px', color: '#5B5680', lineHeight: 1.5, marginBottom: '6px' }}>{c.desc}</div>
+                <span style={s.chip}><span style={s.chipDot} />{c.chip}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '14px' }}>
+            {['Certified vILT instructor - online facilitation at scale', 'Master Train the Trainer — developing facilitators across organisations', '3 languages · delivered in English, German, French'].map(t => (
+              <div key={t} style={{ display: 'flex', alignItems: 'center', gap: '10px', background: '#fff', borderRadius: '8px', padding: '9px 12px', border: '1px solid rgba(0,0,0,0.07)' }}>
+                <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: '#378ADD', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', color: '#fff', flexShrink: 0 }}>✓</div>
+                <div style={{ fontSize: '13px', color: '#1A1A2E' }}>{t}</div>
+              </div>
+            ))}
+          </div>
+          <div style={s.nav}><button style={s.btn} onClick={() => setStep(1)}>Next →</button></div>
+        </>}
+        {step === 1 && <>
+          <div style={s.eye}>Page 2 of 2 — My Experience</div>
+          <div style={s.title}>Facilitation that creates real change</div>
+          <div style={s.card}>
+            <div style={{ fontSize: '10px', color: '#1D9E75', fontWeight: 500, letterSpacing: '0.06em', marginBottom: '5px' }}>Prosus</div>
+            <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 700, color: '#1A1A2E', marginBottom: '6px' }}>Inclusion Workshop</div>
+            <div style={{ fontSize: '12px', color: '#5B5680', lineHeight: 1.5, marginBottom: '8px' }}>At Prosus, inclusion engagement scores needed to improve. Rather than setting up a D&I council as originally tasked, I took a different approach: I gave everyone a voice. I designed and facilitated a series of inclusion workshops across the Finance department, surfacing real experiences and turning them into actionable commitments. Outcomes were shared directly with senior leaders, who were made accountable for implementation. Finance saw more than a 10 point improvement in engagement scores. The impact was significant enough that Legal and HR followed, and the programme was subsequently rolled out globally to sub-companies.</div>
+            <span style={s.chip}><span style={s.chipDot} />Prosus · global rollout · 10pt improvement</span>
+          </div>
+          <div style={s.nav}><button style={s.btnGhost} onClick={() => setStep(0)}>← Back</button><button style={s.btn} onClick={() => router.push('/platform/modules/m5')}>Next module →</button></div>
+        </>}
       </div>
     </div>
   )
@@ -410,7 +422,7 @@ function M5({ router }: { router: ReturnType<typeof useRouter> }) {
             <div><div style={{ fontSize: '12px', fontWeight: 600, color: '#1A1A2E', marginBottom: '3px' }}>What Sandra did</div><div style={{ fontSize: '12px', color: '#5B5680', lineHeight: 1.5 }}>Recruited, trained, and equipped AI Champions across all regions with full plans, role-based toolkits, and autonomy to add their own ideas.</div></div>
           </div>
           <div style={s.outcome}><div style={{ fontSize: '10px', fontWeight: 600, color: '#065F46', marginBottom: '2px' }}>OUTCOME</div><div style={{ fontSize: '12px', color: '#1A1A2E', lineHeight: 1.5 }}>Champions became the connective tissue of the transition. Local adoption accelerated. The model became the template for future change programmes at the organisation.</div></div>
-          <div style={{ display: 'flex', gap: '5px', marginTop: '8px' }}><span style={s.chip}><span style={s.chipDot} />Mibelle · Global L&D Manager · 2024–25</span></div>
+          <div style={{ display: 'flex', gap: '5px', marginTop: '8px' }}><span style={s.chip}><span style={s.chipDot} />Mibelle Group</span></div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '7px', marginBottom: '14px' }}>
           {[['4×', 'Faster adoption vs top-down comms'], ['↓', 'Reduced L&D support burden'], ['↑', 'Sustained engagement beyond launch']].map(([num, txt]) => (
