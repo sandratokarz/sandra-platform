@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 const modules = [
@@ -11,43 +12,54 @@ const modules = [
 ]
 
 export default function LearningPath() {
+  const [completed] = useState<string[]>([])
   const router = useRouter()
 
   return (
-    <div style={{ padding: '1.5rem 2rem', maxWidth: '860px' }}>
+    <div style={{ padding: '1.5rem 2rem', maxWidth: '960px' }}>
+
+      {/* Header */}
       <div style={{ marginBottom: '1.25rem' }}>
         <div style={{ fontSize: '9px', fontWeight: 500, letterSpacing: '0.1em', color: '#7B5CF5', marginBottom: '3px' }}>LEARNING PATH</div>
-        <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: '18px', fontWeight: 800, color: '#1A1A2E', marginBottom: '3px' }}>AI Enablement Platform</h1>
-        <p style={{ fontSize: '11px', color: '#5B5680', lineHeight: 1.6 }}>An interactive learning platform demonstrating how AI capability is built across roles, leadership levels, and geographies.</p>
+        <h1 style={{ fontFamily: 'Inter, sans-serif', fontSize: '24px', fontWeight: 600, color: '#1A1A2E', marginBottom: '3px' }}>AI Enablement Operating Model</h1>
+        <p style={{ fontSize: '12px', color: '#5B5680', lineHeight: 1.6 }}>A hands-on demonstration of how AI enablement drives adoption, behavior change, and measurable business impact.</p>
       </div>
-      <div style={{ display: 'flex', gap: '5px', marginBottom: '14px', flexWrap: 'wrap' as const }}>
-        {modules.map(m => (
-          <button key={m.id} onClick={() => router.push(`/platform/modules/${m.id}`)} style={{ fontSize: '9px', padding: '3px 9px', borderRadius: '10px', border: `1px solid rgba(0,0,0,0.08)`, background: '#fff', color: '#5B5680', cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>
-            {m.num} — {m.cat}
-          </button>
-        ))}
+
+      {/* Step tracker */}
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '16px', flexWrap: 'wrap' as const }}>
+        {modules.map(m => {
+          const done = completed.includes(m.id)
+          return (
+            <div key={m.id} style={{
+              display: 'flex', alignItems: 'center', gap: '5px',
+              fontSize: '11px', padding: '4px 10px', borderRadius: '10px',
+              background: done ? '#EDFAF5' : '#EDE9FE',
+              color: done ? '#065F46' : '#4C1D95',
+              border: `1px solid ${done ? '#1D9E75' : '#7B5CF5'}`,
+              fontFamily: 'Inter, sans-serif', fontWeight: 500,
+            }}>
+              {done && <span>✓</span>}
+              {m.num} — {m.cat}
+            </div>
+          )
+        })}
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+
+      {/* Module grid — 3 columns */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }}>
         {modules.map(m => (
           <div key={m.id} onClick={() => router.push(`/platform/modules/${m.id}`)} style={{ background: '#fff', borderRadius: '10px', overflow: 'hidden', border: `1px solid rgba(0,0,0,0.06)`, cursor: 'pointer' }}>
+            <img src={`/modules/${m.id}.jpg`} style={{ width: '100%', height: '160px', objectFit: 'cover' }} />
             <div style={{ height: '3px', background: m.color }} />
             <div style={{ padding: '11px 13px' }}>
               <div style={{ fontSize: '8px', color: m.color, fontWeight: 500, letterSpacing: '0.06em', marginBottom: '3px' }}>{m.num} — {m.cat}</div>
-              <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '12px', fontWeight: 700, color: '#1A1A2E', marginBottom: '4px', lineHeight: 1.3 }}>{m.title}</div>
+              <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', fontWeight: 700, color: '#1A1A2E', marginBottom: '4px', lineHeight: 1.3 }}>{m.title}</div>
               <div style={{ fontSize: '10px', color: '#5B5680', lineHeight: 1.55, marginBottom: '8px' }}>{m.desc}</div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <span style={{ fontSize: '8px', color: '#9B96C0' }}>⏱ {m.time}</span>
                 <span style={{ fontSize: '7px', padding: '2px 6px', borderRadius: '4px', background: m.badgeBg, color: m.badgeColor }}>{m.badge}</span>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <div style={{ marginTop: '14px', display: 'flex', gap: '22px', padding: '12px 16px', background: '#fff', borderRadius: '10px', border: '1px solid rgba(0,0,0,0.06)' }}>
-        {[['12+', 'Years in L&D'], ['54k', 'Associates reached'], ['6', 'Modules'], ['~6min', 'Full experience']].map(([num, lbl]) => (
-          <div key={lbl}>
-            <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '18px', fontWeight: 800, color: '#1A1A2E' }}>{num}</div>
-            <div style={{ fontSize: '8px', color: '#9B96C0', marginTop: '1px' }}>{lbl}</div>
           </div>
         ))}
       </div>

@@ -20,13 +20,13 @@ export default function LoginPage() {
       <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', padding: '2rem', width: '100%', maxWidth: '380px' }}>
 
         {/* Logo */}
-        <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '15px', fontWeight: 800, color: '#fff', display: 'flex', alignItems: 'center', gap: '7px', marginBottom: '24px' }}>
+        <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '7px', marginBottom: '24px' }}>
           <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#7B5CF5', display: 'inline-block' }} />
           Sandra Tokarz
         </div>
 
         {/* Heading */}
-        <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: '20px', fontWeight: 800, color: '#fff', marginBottom: '4px' }}>
+        <h1 style={{ fontFamily: 'Inter, sans-serif', fontSize: '20px', fontWeight: 700, color: '#fff', marginBottom: '4px' }}>
           Welcome back
         </h1>
         <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', lineHeight: 1.6, marginBottom: '20px' }}>
@@ -54,7 +54,7 @@ export default function LoginPage() {
         {/* Button */}
         <button
           onClick={handleLogin}
-          style={{ width: '100%', background: '#7B5CF5', color: '#fff', border: 'none', borderRadius: '8px', padding: '12px', fontSize: '13px', fontWeight: 700, cursor: 'pointer', fontFamily: 'Syne, sans-serif', marginTop: '4px' }}>
+          style={{ width: '100%', background: '#7B5CF5', color: '#fff', border: 'none', borderRadius: '8px', padding: '12px', fontSize: '13px', fontWeight: 700, cursor: 'pointer', fontFamily: 'Inter, sans-serif', marginTop: '4px' }}>
           Enter Platform →
         </button>
 

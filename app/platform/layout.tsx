@@ -16,7 +16,7 @@ export default function PlatformLayout({ children }: { children: React.ReactNode
 
       {/* TOP NAV */}
       <nav style={{ backgroundColor: '#1A1A2E', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 1.25rem' }}>
-        <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '14px', fontWeight: 800, color: '#fff', display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 500, color: '#fff', display: 'flex', alignItems: 'center', gap: '6px' }}>
           <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#7B5CF5', display: 'inline-block' }} />
           Sandra Tokarz
         </div>
@@ -52,10 +52,10 @@ export default function PlatformLayout({ children }: { children: React.ReactNode
 
           {/* Avatar block */}
           <div style={{ padding: '0 .9rem 1rem', borderBottom: '1px solid rgba(255,255,255,0.06)', marginBottom: '.9rem' }}>
-            <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#7B5CF5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Syne, sans-serif', fontSize: '12px', fontWeight: 800, color: '#fff', marginBottom: '6px' }}>
+            <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#7B5CF5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Inter, sans-serif', fontSize: '12px', fontWeight: 700, color: '#fff', marginBottom: '6px' }}>
               ST
             </div>
-            <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '11px', fontWeight: 700, color: '#fff' }}>Sandra Tokarz</div>
+            <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 700, color: '#fff' }}>Sandra Tokarz</div>
             <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.28)', marginTop: '1px' }}>L&D Leader · Coach</div>
             <div style={{ marginTop: '8px', display: 'flex', gap: '4px' }}>
               <span style={{ fontSize: '8px', padding: '2px 6px', borderRadius: '6px', background: 'rgba(123,92,245,0.2)', color: '#A78BFA' }}>Explorer</span>

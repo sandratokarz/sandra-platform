@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Sandra Tokarz | L&D Platform',
-  description: 'Interactive Learning & Development Platform',
+  title: 'AI Enablement Operating Model| Sandra Tokarz',
+  description: ' hands-on demonstration of how AI enablement drives adoption, behavior change, and measurable business impact.',
 }
 
 export default function RootLayout({
