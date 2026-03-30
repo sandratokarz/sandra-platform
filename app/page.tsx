@@ -27,10 +27,10 @@ export default function Home() {
             Step into a hands-on AI enablement experience designed to show how I support organisations build capability, drive adoption, and translate AI into real performance.
           </p>
           <div style={{ display: 'flex', gap: '12px' }}>
-            <button onClick={() => router.push('/login')} style={{ background: 'linear-gradient(135deg, #7B5CF5 0%, #A78BFA 100%)', color: '#fff', border: 'none', borderRadius: '10px', padding: '14px 28px', fontSize: '14px', fontWeight: 600, cursor: 'pointer' }}>
+            <button onClick={() => router.push('/platform')} style={{ background: 'linear-gradient(135deg, #7B5CF5 0%, #A78BFA 100%)', color: '#fff', border: 'none', borderRadius: '10px', padding: '14px 28px', fontSize: '14px', fontWeight: 600, cursor: 'pointer' }}>
               ▶ Start learning journey
             </button>
-            <button onClick={() => router.push('/login')} style={{ background: 'transparent', color: '#fff', border: '2px solid transparent', borderRadius: '10px', padding: '14px 28px', fontSize: '14px', cursor: 'pointer', backgroundImage: 'linear-gradient(#1A1A2E, #1A1A2E), linear-gradient(135deg, #7B5CF5, #A78BFA)', backgroundOrigin: 'border-box', backgroundClip: 'padding-box, border-box' }}>
+            <button onClick={() => router.push('/platform')} style={{ background: 'transparent', color: '#fff', border: '2px solid transparent', borderRadius: '10px', padding: '14px 28px', fontSize: '14px', cursor: 'pointer', backgroundImage: 'linear-gradient(#1A1A2E, #1A1A2E), linear-gradient(135deg, #7B5CF5, #A78BFA)', backgroundOrigin: 'border-box', backgroundClip: 'padding-box, border-box' }}>
               Get in touch
             </button>
           </div>
