@@ -32,3 +32,9 @@ body {
   font-family: 'Inter', sans-serif;
   background: var(--cream);
 }
+
+@media (max-width: 640px) {
+  body {
+    overflow-x: hidden;
+  }
+}

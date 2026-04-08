@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 
 const navItems = [
@@ -10,17 +10,25 @@ const navItems = [
 export default function PlatformLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   return (
     <div style={{ display: 'grid', gridTemplateRows: '52px 1fr', minHeight: '100vh', fontFamily: 'Inter, sans-serif' }}>
 
       {/* TOP NAV */}
-      <nav style={{ backgroundColor: '#1A1A2E', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 1.25rem' }}>
+      <nav style={{ backgroundColor: '#1A1A2E', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 1.25rem', flexWrap: 'wrap' as const }}>
         <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 500, color: '#fff', display: 'flex', alignItems: 'center', gap: '6px' }}>
           <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#7B5CF5', display: 'inline-block' }} />
           Sandra Tokarz
         </div>
-        <div style={{ display: 'flex', gap: '2px' }}>
+        <div style={{ display: isMobile ? 'none' : 'flex', gap: '2px' }}>
           {navItems.map(item => (
             <button
               key={item.id}
@@ -45,10 +53,10 @@ export default function PlatformLayout({ children }: { children: React.ReactNode
       </nav>
 
       {/* BODY */}
-      <div style={{ display: 'flex', height: 'calc(100vh - 52px)' }}>
+      <div style={{ display: 'flex', height: isMobile ? 'auto' : 'calc(100vh - 52px)' }}>
 
         {/* SIDEBAR */}
-        <aside style={{ width: '188px', minWidth: '188px', backgroundColor: '#1E1B35', borderRight: '1px solid rgba(255,255,255,0.05)', padding: '1rem 0', display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+        <aside style={{ width: '188px', minWidth: '188px', backgroundColor: '#1E1B35', borderRight: '1px solid rgba(255,255,255,0.05)', padding: '1rem 0', display: isMobile ? 'none' : 'flex', flexDirection: 'column', overflowY: 'auto' }}>
 
           {/* Avatar block */}
           <div style={{ padding: '0 .9rem 1rem', borderBottom: '1px solid rgba(255,255,255,0.06)', marginBottom: '.9rem' }}>
@@ -96,11 +104,28 @@ export default function PlatformLayout({ children }: { children: React.ReactNode
         </aside>
 
         {/* PAGE CONTENT */}
-        <main style={{ flex: 1, overflowY: 'auto', backgroundColor: '#F5F0E8' }}>
+        <main style={{ flex: 1, overflowY: 'auto', backgroundColor: '#F5F0E8', width: '100%', minHeight: isMobile ? 'calc(100vh - 52px)' : 'auto' }}>
           {children}
         </main>
 
       </div>
+
+      {/* MOBILE BOTTOM NAV */}
+      <div style={{ display: isMobile ? 'flex' : 'none', position: 'fixed', bottom: 0, left: 0, right: 0, background: '#1A1A2E', borderTop: '1px solid rgba(255,255,255,0.08)', padding: '8px 0', zIndex: 100, justifyContent: 'space-around' }}>
+        <button onClick={() => router.push('/platform')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', background: 'transparent', border: 'none', cursor: 'pointer', padding: '4px 12px' }}>
+          <span style={{ fontSize: '16px' }}>⊞</span>
+          <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)' }}>Path</span>
+        </button>
+        <button onClick={() => router.push('/platform/about')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', background: 'transparent', border: 'none', cursor: 'pointer', padding: '4px 12px' }}>
+          <span style={{ fontSize: '16px' }}>◉</span>
+          <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)' }}>About</span>
+        </button>
+        <button onClick={() => router.push('/platform/modules/m1')} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', background: 'transparent', border: 'none', cursor: 'pointer', padding: '4px 12px' }}>
+          <span style={{ fontSize: '16px' }}>⬡</span>
+          <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)' }}>Modules</span>
+        </button>
+      </div>
+
     </div>
   )
 }

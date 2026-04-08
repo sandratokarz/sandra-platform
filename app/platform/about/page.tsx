@@ -1,11 +1,14 @@
+'use client'
+import { useEffect, useState } from 'react'
+
 export default function AboutPage() {
-  const skills = [
-    { label: 'AI enablement', pct: 96, color: '#7B5CF5' },
-    { label: 'Instructional design', pct: 98, color: '#7B5CF5' },
-    { label: 'Exec facilitation', pct: 91, color: '#A78BFA' },
-    { label: 'Change management', pct: 93, color: '#A78BFA' },
-    { label: 'Global delivery', pct: 100, color: '#1D9E75' },
-  ]
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   const timeline = [
     {
@@ -100,28 +103,23 @@ export default function AboutPage() {
     },
   ]
 
-  const kfBars = [
-    { label: 'AI enablement strategy', pct: 96, color: '#7B5CF5' },
-    { label: 'Instructional design', pct: 98, color: '#7B5CF5' },
-    { label: 'Champions network', pct: 95, color: '#A78BFA' },
-    { label: 'Global delivery', pct: 100, color: '#1D9E75' },
-  ]
-
-  const successItems = [
-    'A clear, evolving AI Enablement strategy that stays current and is anchored in business impact.',
-    'Role-based learning journeys that improve confidence, responsible usage, and measurable adoption.',
-    'High-quality content assets that are consistently used and easy to find.',
-    'Strong participant outcomes from trainings — especially at the leadership/executive level.',
-  ]
-
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr', height: '100%' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '220px 1fr', minHeight: '100%', flexDirection: 'column' as const }}>
 
       {/* LEFT PANEL */}
-      <div style={{ background: '#1E1B35', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1.1rem', overflowY: 'auto' }}>
+      <div style={{
+        background: '#1E1B35',
+        padding: isMobile ? '1rem' : '1.25rem',
+        display: 'flex',
+        flexDirection: isMobile ? 'row' : 'column' as const,
+        gap: isMobile ? '12px' : '1.1rem',
+        alignItems: isMobile ? 'center' : 'flex-start' as const,
+        overflowY: isMobile ? 'visible' : 'auto' as const,
+        flexWrap: isMobile ? 'wrap' as const : 'nowrap' as const,
+      }}>
         {/* Avatar */}
         <div style={{ textAlign: 'center' }}>
-          <img src="/sandra.jpg" alt="Sandra Tokarz" style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', margin: '0 auto 7px', display: 'block', border: '2px solid rgba(255,255,255,0.1)' }} />
+          <img src="/sandra.jpg" alt="Sandra Tokarz" style={{ width: isMobile ? '48px' : '60px', height: isMobile ? '48px' : '60px', borderRadius: '50%', objectFit: 'cover', margin: '0 auto 7px', display: 'block', border: '2px solid rgba(255,255,255,0.1)' }} />
           <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 600, color: '#fff' }}>Sandra Tokarz</div>
           <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.3)', lineHeight: 1.5, marginTop: '2px' }}>Strategic L&D Leader<br />AI Enablement Builder · ICF Coach</div>
         </div>
@@ -137,7 +135,7 @@ export default function AboutPage() {
         </div>
 
         {/* Skills */}
-        <div>
+        <div style={{ display: isMobile ? 'none' : 'block' }}>
           <div style={{ fontSize: '7px', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.18)', marginBottom: '6px' }}>CAPABILITIES</div>
           <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '4px' }}>
             {['AI Enablement', 'Change Management', 'Instructional Design', 'Executive Facilitation', 'Coaching', 'Global L&D Strategy', 'Leadership Development'].map(cap => (
@@ -147,7 +145,7 @@ export default function AboutPage() {
         </div>
 
         {/* Languages */}
-        <div>
+        <div style={{ display: isMobile ? 'none' : 'block' }}>
           <div style={{ fontSize: '7px', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.18)', marginBottom: '6px' }}>LANGUAGES</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             {[['🇩🇪 German', 'Native'], ['🇵🇱 Polish', 'Mother tongue'], ['🇬🇧 English', 'C2'], ['🇳🇱 Dutch', 'B2'], ['🇪🇸 Spanish', 'B1'], ['🇫🇷 French', 'A2']].map(([lang, level]) => (
@@ -160,7 +158,7 @@ export default function AboutPage() {
         </div>
 
         {/* Tools */}
-        <div>
+        <div style={{ display: isMobile ? 'none' : 'block' }}>
           <div style={{ fontSize: '7px', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.18)', marginBottom: '6px' }}>TOOLS</div>
           <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '4px' }}>
             {['Degreed', 'Cornerstone', 'LearnUpon', 'Microsoft 365', 'Canva', 'Github', 'Notion', 'Claude Code', 'Vercel', 'Articulate', 'PowerAutomate', 'AI Agents', 'Google Suite'].map(tool => (
@@ -170,7 +168,7 @@ export default function AboutPage() {
         </div>
 
         {/* Certifications */}
-        <div>
+        <div style={{ display: isMobile ? 'none' : 'block' }}>
           <div style={{ fontSize: '7px', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.18)', marginBottom: '6px' }}>CERTIFICATIONS</div>
           {['ICF Life Coach', 'Insights Discovery · EQi 2.0', 'FranklinCovey Trainer', 'vILT Instructor · Master TTT'].map(cert => (
             <div key={cert} style={{ display: 'flex', gap: '4px', alignItems: 'center', fontSize: '8px', color: 'rgba(255,255,255,0.4)', marginBottom: '3px' }}>
@@ -180,18 +178,20 @@ export default function AboutPage() {
           ))}
         </div>
 
-        <button style={{ background: '#7B5CF5', color: '#fff', border: 'none', borderRadius: '7px', padding: '8px', fontSize: '10px', fontWeight: 700, cursor: 'pointer', fontFamily: 'Inter, sans-serif', width: '100%' }}>
-          Get in touch →
-        </button>
+        <div style={{ display: isMobile ? 'none' : 'block', width: '100%' }}>
+          <button style={{ background: '#7B5CF5', color: '#fff', border: 'none', borderRadius: '7px', padding: '8px', fontSize: '10px', fontWeight: 700, cursor: 'pointer', fontFamily: 'Inter, sans-serif', width: '100%' }}>
+            Get in touch →
+          </button>
+        </div>
       </div>
 
       {/* RIGHT PANEL */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem 2rem', background: '#F5F0E8' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: isMobile ? '1rem 1rem 80px' : '1.5rem 2rem', background: '#F5F0E8' }}>
 
         {/* Professional summary */}
         <div style={{ marginBottom: '20px' }}>
           <div style={{ fontSize: '9px', fontWeight: 500, letterSpacing: '0.1em', color: '#7B5CF5', marginBottom: '6px' }}>PROFESSIONAL SUMMARY</div>
-          <p style={{ fontSize: '13px', color: '#5B5680', lineHeight: 1.8, margin: 0 }}>Strategic Learning & Development Leader with 12+ years designing and delivering impactful, data-driven learning strategies across global technology and corporate environments. Expert in AI-driven enablement, role-based curriculum design, instructional design, and executive facilitation. Proven ability to translate business goals into scalable L&D programmes that drive measurable behaviour change and adoption. Multicultural experience across EMEA in complex global matrix organisations. Currently building two live web applications in parallel with coaching practice.</p>
+          <p style={{ fontSize: isMobile ? '12px' : '13px', color: '#5B5680', lineHeight: 1.8, margin: 0 }}>Strategic Learning & Development Leader with 12+ years designing and delivering impactful, data-driven learning strategies across global technology and corporate environments. Expert in AI-driven enablement, role-based curriculum design, instructional design, and executive facilitation. Proven ability to translate business goals into scalable L&D programmes that drive measurable behaviour change and adoption. Multicultural experience across EMEA in complex global matrix organisations. Currently building two live web applications in parallel with coaching practice.</p>
         </div>
 
         {/* Career timeline */}
@@ -201,13 +201,13 @@ export default function AboutPage() {
           {timeline.map((entry, i) => (
             <div key={i} style={{ position: 'relative', marginBottom: '12px' }}>
               <div style={{ position: 'absolute', left: '-16px', top: '4px', width: '8px', height: '8px', borderRadius: '50%', border: `2px solid ${entry.color}`, background: '#F5F0E8' }} />
-              <div style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.07)', borderRadius: '10px', padding: '.9rem 1rem' }}>
+              <div style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.07)', borderRadius: '10px', padding: isMobile ? '.75rem' : '.9rem 1rem' }}>
                 <div style={{ fontSize: '8px', fontWeight: 500, letterSpacing: '0.06em', color: entry.color, marginBottom: '3px' }}>{entry.co}</div>
                 <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', fontWeight: 700, color: '#1A1A2E', marginBottom: '2px' }}>{entry.title}</div>
                 <div style={{ fontSize: '8px', color: '#9B96C0', marginBottom: '6px' }}>{entry.period}</div>
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '3px', padding: 0, margin: 0 }}>
                   {entry.bullets.map((b, j) => (
-                    <li key={j} style={{ fontSize: '10px', color: '#5B5680', paddingLeft: '11px', position: 'relative', lineHeight: 1.4 }}>
+                    <li key={j} style={{ fontSize: '11px', color: '#5B5680', paddingLeft: '11px', position: 'relative', lineHeight: 1.4 }}>
                       <span style={{ position: 'absolute', left: 0, color: '#7B5CF5', fontSize: '9px' }}>→</span>
                       {b}
                     </li>

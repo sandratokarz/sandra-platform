@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 const modules = [
@@ -13,10 +13,18 @@ const modules = [
 
 export default function LearningPath() {
   const [completed] = useState<string[]>([])
+  const [isMobile, setIsMobile] = useState(false)
   const router = useRouter()
 
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
   return (
-    <div style={{ padding: '1.5rem 2rem', maxWidth: '960px' }}>
+    <div style={{ padding: isMobile ? '1rem' : '1.5rem 2rem', maxWidth: '960px', paddingBottom: isMobile ? '80px' : '0' }}>
 
       {/* Header */}
       <div style={{ marginBottom: '1.25rem' }}>
@@ -45,8 +53,8 @@ export default function LearningPath() {
         })}
       </div>
 
-      {/* Module grid — 3 columns */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }}>
+      {/* Module grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '8px' }}>
         {modules.map(m => (
           <div key={m.id} onClick={() => router.push(`/platform/modules/${m.id}`)} style={{ background: '#fff', borderRadius: '10px', overflow: 'hidden', border: `1px solid rgba(0,0,0,0.06)`, cursor: 'pointer' }}>
             <img src={`/modules/${m.id}.jpg`} style={{ width: '100%', height: '160px', objectFit: 'cover' }} />

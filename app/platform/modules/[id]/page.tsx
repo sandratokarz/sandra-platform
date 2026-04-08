@@ -1,6 +1,17 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+  return isMobile
+}
 
 // ── shared styles ──────────────────────────────────────────
 const s = {
@@ -14,8 +25,8 @@ const s = {
   stepTxt: { fontSize: '12px', color: '#fff' },
   right: { overflowY: 'auto' as const, padding: '1.5rem 2rem', background: '#F5F0E8', flex: 1 },
   eye: { fontSize: '11px', color: '#9B96C0', marginBottom: '6px' },
-  title: { fontFamily: 'Inter, sans-serif', fontSize: '19px', fontWeight: 700, color: '#1A1A2E', marginBottom: '8px', lineHeight: 1.2 },
-  body: { fontSize: '14px', color: '#5B5680', lineHeight: 1.7, marginBottom: '14px' },
+  title: { fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 4vw, 19px)', fontWeight: 700, color: '#1A1A2E', marginBottom: '8px', lineHeight: 1.2 },
+  body: { fontSize: 'clamp(12px, 2vw, 14px)', color: '#5B5680', lineHeight: 1.7, marginBottom: '14px' },
   card: { background: '#fff', border: '1px solid rgba(0,0,0,0.07)', borderRadius: '10px', padding: '1rem', marginBottom: '10px' },
   nav: { display: 'flex', gap: '8px', marginTop: '14px' },
   btn: { background: '#7B5CF5', color: '#fff', border: 'none', borderRadius: '7px', padding: '8px 16px', fontSize: '13px', fontWeight: 700, cursor: 'pointer', fontFamily: 'Inter, sans-serif' },
@@ -66,10 +77,11 @@ function M1({ router }: { router: ReturnType<typeof useRouter> }) {
     },
   ]
   const [sfStep, setSfStep] = useState(0)
+  const isMobile = useIsMobile()
 
   return (
-    <div style={s.shell}>
-      <div style={s.left}>
+    <div style={{ ...s.shell, gridTemplateColumns: isMobile ? '1fr' : '200px 1fr' }}>
+      <div style={{ ...s.left, display: isMobile ? 'none' : 'flex' }}>
         <button style={s.back} onClick={() => router.push('/platform')}>← Back to path</button>
         <div style={s.num}>MODULE 01</div>
         <div style={s.mlTitle}>Global AI Enablement Strategy</div>
@@ -83,12 +95,13 @@ function M1({ router }: { router: ReturnType<typeof useRouter> }) {
           <div style={s.upNextItem}><div style={s.dot(false)} />Role Curriculum</div>
         </div>
       </div>
-      <div style={s.right}>
+      <div style={{ ...s.right, padding: isMobile ? '1rem 1rem 80px' : '1.5rem 2rem' }}>
+        {isMobile && <button style={{ ...s.back, color: '#7B5CF5', marginBottom: '10px', display: 'block' }} onClick={() => router.push('/platform')}>← Back to path</button>}
         {step === 0 && <>
           <div style={s.eye}>Page 1 of 3 — Framework</div>
           <div style={s.title}>From Tools to Business Impact</div>
           <div style={s.body}>AI doesn't fail because of tools. It fails because adoption isn't designed. Effective enablement connects three layers starting with priorities, not platforms.</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '10px', marginBottom: '14px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', gap: '10px', marginBottom: '14px' }}>
             {[
               { bg: '#EDE9FE', border: 'rgba(123,92,245,0.2)', ico: '🎯', titleColor: '#4C1D95', title: 'Business Priorities', items: ['Increase consultant productivity', 'Enhance client value', 'Ensure responsible AI usage', 'Scale knowledge globally'], qBg: 'rgba(123,92,245,0.1)', q: '"AI is only successful if it improves billable impact."' },
               { bg: '#FDF2F2', border: 'rgba(244,168,168,0.3)', ico: '👤', titleColor: '#9B1C1C', title: 'User Needs', items: ['Consultants: faster outputs', 'Internal: automate tasks', 'Leaders: understand ROI', 'All: AI in my workflow'], qBg: 'rgba(244,168,168,0.15)', q: '"Adoption happens when AI solves today\'s problem."' },
@@ -178,10 +191,11 @@ function M2({ router }: { router: ReturnType<typeof useRouter> }) {
   ]
   const colors = ['#7B5CF5', '#F4A8A8', '#1D9E75']
   const r = roles[activeRole]
+  const isMobile = useIsMobile()
 
   return (
-    <div style={s.shell}>
-      <div style={s.left}>
+    <div style={{ ...s.shell, gridTemplateColumns: isMobile ? '1fr' : '200px 1fr' }}>
+      <div style={{ ...s.left, display: isMobile ? 'none' : 'flex' }}>
         <button style={s.back} onClick={() => router.push('/platform')}>← Back to path</button>
         <div style={s.num}>MODULE 02</div>
         <div style={s.mlTitle}>Role-Based Learning Journeys</div>
@@ -192,12 +206,13 @@ function M2({ router }: { router: ReturnType<typeof useRouter> }) {
         ))}
         <div style={s.upNext}><div style={s.upNextLbl}>UP NEXT</div><div style={s.upNextItem}><div style={s.dot(false)} />Toolkits</div></div>
       </div>
-      <div style={s.right}>
+      <div style={{ ...s.right, padding: isMobile ? '1rem 1rem 80px' : '1.5rem 2rem' }}>
+        {isMobile && <button style={{ ...s.back, color: '#7B5CF5', marginBottom: '10px', display: 'block' }} onClick={() => router.push('/platform')}>← Back to path</button>}
         {step === 0 && <>
           <div style={s.eye}>Page 1 of 2 — Role Curricula</div>
           <div style={s.title}>Role-Based Learning Journeys</div>
           <div style={s.body}>Each curriculum is built from real use cases and designed as short, practical learning moments embedded into daily work. Click a role to explore its curriculum.</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '10px', marginBottom: '12px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', gap: '10px', marginBottom: '12px' }}>
             {roles.map((role, i) => (
               <div key={i} onClick={() => setActiveRole(i)} style={{ background: '#fff', border: `1.5px solid ${activeRole === i ? '#7B5CF5' : 'rgba(0,0,0,0.07)'}`, borderRadius: '11px', overflow: 'hidden', cursor: 'pointer' }}>
                 <div style={{ height: '70px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '26px', background: role.bg }}>{role.emoji}</div>
@@ -249,6 +264,7 @@ function M3({ router }: { router: ReturnType<typeof useRouter> }) {
   const [format, setFormat] = useState('blended')
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<any>(null)
+  const isMobile = useIsMobile()
 
   async function generate() {
     if (!challenge.trim()) return alert('Please describe your challenge first.')
@@ -266,8 +282,8 @@ function M3({ router }: { router: ReturnType<typeof useRouter> }) {
   }
 
   return (
-    <div style={s.shell}>
-      <div style={s.left}>
+    <div style={{ ...s.shell, gridTemplateColumns: isMobile ? '1fr' : '200px 1fr' }}>
+      <div style={{ ...s.left, display: isMobile ? 'none' : 'flex' }}>
         <button style={s.back} onClick={() => router.push('/platform')}>← Back to path</button>
         <div style={s.num}>MODULE 03</div>
         <div style={s.mlTitle}>Learning That Drives Action</div>
@@ -278,7 +294,8 @@ function M3({ router }: { router: ReturnType<typeof useRouter> }) {
         ))}
         <div style={s.upNext}><div style={s.upNextLbl}>UP NEXT</div><div style={s.upNextItem}><div style={s.dot(false)} />Delivery</div></div>
       </div>
-      <div style={s.right}>
+      <div style={{ ...s.right, padding: isMobile ? '1rem 1rem 80px' : '1.5rem 2rem' }}>
+        {isMobile && <button style={{ ...s.back, color: '#7B5CF5', marginBottom: '10px', display: 'block' }} onClick={() => router.push('/platform')}>← Back to path</button>}
         {step === 0 && <>
           <div style={s.eye}>Page 1 of 2 — AI Toolkit Generator</div>
           <div style={s.title}>Practical content designed for real work</div>
@@ -335,9 +352,10 @@ function M3({ router }: { router: ReturnType<typeof useRouter> }) {
 
 function M4({ router }: { router: ReturnType<typeof useRouter> }) {
   const [step, setStep] = useState(0)
+  const isMobile = useIsMobile()
   return (
-    <div style={s.shell}>
-      <div style={s.left}>
+    <div style={{ ...s.shell, gridTemplateColumns: isMobile ? '1fr' : '200px 1fr' }}>
+      <div style={{ ...s.left, display: isMobile ? 'none' : 'flex' }}>
         <button style={s.back} onClick={() => router.push('/platform')}>← Back to path</button>
         <div style={s.num}>MODULE 04</div>
         <div style={s.mlTitle}>Facilitation That Engages & Scales</div>
@@ -348,12 +366,13 @@ function M4({ router }: { router: ReturnType<typeof useRouter> }) {
         ))}
         <div style={s.upNext}><div style={s.upNextLbl}>UP NEXT</div><div style={s.upNextItem}><div style={s.dot(false)} />AI Network</div></div>
       </div>
-      <div style={s.right}>
+      <div style={{ ...s.right, padding: isMobile ? '1rem 1rem 80px' : '1.5rem 2rem' }}>
+        {isMobile && <button style={{ ...s.back, color: '#7B5CF5', marginBottom: '10px', display: 'block' }} onClick={() => router.push('/platform')}>← Back to path</button>}
         {step === 0 && <>
           <div style={s.eye}>Module 04 — Delivery & Facilitation</div>
           <div style={s.title}>Facilitation is the art of creating conditions where people genuinely change</div>
           <div style={s.body}>10+ years across every level — from blue collar operators to C-suite executives. In person and virtual. Delivered globally in 3 languages.</div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
             {[
               { title: 'Workshops', desc: 'Delivered virtual and in person team development workshops, certifications, train the trainer workshops.', chip: 'Mibelle · Prosus · Starwood' },
               { title: 'Keynote Speech', desc: 'Held a full keynote at Booking.com Global conference with over 750 attendees.', chip: 'Booking.com' },
@@ -394,20 +413,22 @@ function M4({ router }: { router: ReturnType<typeof useRouter> }) {
 }
 
 function M5({ router }: { router: ReturnType<typeof useRouter> }) {
+  const isMobile = useIsMobile()
   return (
-    <div style={s.shell}>
-      <div style={s.left}>
+    <div style={{ ...s.shell, gridTemplateColumns: isMobile ? '1fr' : '200px 1fr' }}>
+      <div style={{ ...s.left, display: isMobile ? 'none' : 'flex' }}>
         <button style={s.back} onClick={() => router.push('/platform')}>← Back to path</button>
         <div style={s.num}>MODULE 05</div>
         <div style={s.mlTitle}>Scaling Through AI Champions</div>
         <div style={s.step(true)}><div style={s.dot(true)} /><span style={s.stepTxt}>Case study</span></div>
         <div style={s.upNext}><div style={s.upNextLbl}>UP NEXT</div><div style={s.upNextItem}><div style={s.dot(false)} />Dashboard</div></div>
       </div>
-      <div style={s.right}>
+      <div style={{ ...s.right, padding: isMobile ? '1rem 1rem 80px' : '1.5rem 2rem' }}>
+        {isMobile && <button style={{ ...s.back, color: '#7B5CF5', marginBottom: '10px', display: 'block' }} onClick={() => router.push('/platform')}>← Back to path</button>}
         <div style={s.eye}>Module 05 — AI Champions Network</div>
         <div style={s.title}>Adoption doesn't scale through training alone</div>
         <div style={s.body}>A champions network is the connective tissue between an enablement programme and sustainable adoption. Champions create local momentum, reduce friction, and give people someone to ask who isn't in L&D.</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '8px', marginBottom: '12px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', gap: '8px', marginBottom: '12px' }}>
           {[['Recruit', 'Select by influence, not just enthusiasm'], ['Equip', 'Playbooks, talking points, local use cases'], ['Activate', 'Drive adoption locally, with L&D as strategic support']].map(([t, d]) => (
             <div key={t} style={{ ...s.card, textAlign: 'center' as const, marginBottom: 0 }}>
               <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 700, color: '#7B5CF5', marginBottom: '4px' }}>{t}</div>
@@ -424,7 +445,7 @@ function M5({ router }: { router: ReturnType<typeof useRouter> }) {
           <div style={s.outcome}><div style={{ fontSize: '10px', fontWeight: 600, color: '#065F46', marginBottom: '2px' }}>OUTCOME</div><div style={{ fontSize: '12px', color: '#1A1A2E', lineHeight: 1.5 }}>Champions became the connective tissue of the transition. Local adoption accelerated. The model became the template for future change programmes at the organisation.</div></div>
           <div style={{ display: 'flex', gap: '5px', marginTop: '8px' }}><span style={s.chip}><span style={s.chipDot} />Mibelle Group</span></div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '7px', marginBottom: '14px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', gap: '7px', marginBottom: '14px' }}>
           {[['4×', 'Faster adoption vs top-down comms'], ['↓', 'Reduced L&D support burden'], ['↑', 'Sustained engagement beyond launch']].map(([num, txt]) => (
             <div key={txt} style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.07)', borderRadius: '9px', padding: '10px', textAlign: 'center' as const }}>
               <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '24px', fontWeight: 700, color: '#7B5CF5' }}>{num}</div>
@@ -441,10 +462,11 @@ function M5({ router }: { router: ReturnType<typeof useRouter> }) {
 function M6({ router }: { router: ReturnType<typeof useRouter> }) {
   const [step, setStep] = useState(0)
   const [filter, setFilter] = useState('All departments')
+  const isMobile = useIsMobile()
 
   return (
-    <div style={s.shell}>
-      <div style={s.left}>
+    <div style={{ ...s.shell, gridTemplateColumns: isMobile ? '1fr' : '200px 1fr' }}>
+      <div style={{ ...s.left, display: isMobile ? 'none' : 'flex' }}>
         <button style={s.back} onClick={() => router.push('/platform')}>← Back to path</button>
         <div style={s.num}>MODULE 06</div>
         <div style={s.mlTitle}>Measure, Learn, Improve</div>
@@ -454,12 +476,13 @@ function M6({ router }: { router: ReturnType<typeof useRouter> }) {
           </div>
         ))}
       </div>
-      <div style={s.right}>
+      <div style={{ ...s.right, padding: isMobile ? '1rem 1rem 80px' : '1.5rem 2rem' }}>
+        {isMobile && <button style={{ ...s.back, color: '#7B5CF5', marginBottom: '10px', display: 'block' }} onClick={() => router.push('/platform')}>← Back to path</button>}
         {step === 0 && <>
           <div style={s.eye}>Page 1 of 3 — Measurement Approach</div>
           <div style={s.title}>From Learning to Impact</div>
           <div style={s.body}>"I measure effectiveness across three layers — adoption, behaviour, and business impact — and use these insights to continuously refine use cases, learning design, and delivery."</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '9px', marginBottom: '14px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', gap: '9px', marginBottom: '14px' }}>
             {[
               { color: '#7B5CF5', label: '1. Adoption', q: 'Are people using AI?', items: 'Tool usage · prompts · active users · daily workflow frequency', note: 'Signals whether enablement reaches the workflow' },
               { color: '#A78BFA', label: '2. Behaviour', q: 'Working differently?', items: 'Use case completion · template usage · repeat engagement with learning', note: 'Shows if learning translates into action' },
@@ -494,7 +517,7 @@ function M6({ router }: { router: ReturnType<typeof useRouter> }) {
               <button key={f} onClick={() => setFilter(f)} style={{ fontSize: '12px', padding: '4px 10px', borderRadius: '14px', border: `1px solid ${filter === f ? '#7B5CF5' : 'rgba(0,0,0,0.08)'}`, background: filter === f ? '#7B5CF5' : '#fff', color: filter === f ? '#fff' : '#5B5680', cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>{f}</button>
             ))}
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '8px', marginBottom: '12px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4,1fr)', gap: '8px', marginBottom: '12px' }}>
             {[['71%', 'Active AI users', '#7B5CF5'], ['84%', 'Module completion', '#A78BFA'], ['+22pt', 'Confidence score', '#1D9E75'], ['3.2h', 'Avg time saved/wk', '#BA7517']].map(([num, lbl, color]) => (
               <div key={lbl} style={{ ...s.card, position: 'relative', overflow: 'hidden', marginBottom: 0 }}>
                 <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '2.5px', background: color }} />
@@ -503,7 +526,7 @@ function M6({ router }: { router: ReturnType<typeof useRouter> }) {
               </div>
             ))}
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '8px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '8px', marginBottom: '8px' }}>
             <div style={s.card}>
               <div style={{ fontSize: '14px', fontWeight: 500, color: '#1A1A2E', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}><div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#7B5CF5' }} />AI adoption by role</div>
               {[['Consultants', 86, '#7B5CF5'], ['Leaders', 58, '#A78BFA'], ['Internal teams', 71, '#1D9E75']].map(([lbl, pct, color]) => (
