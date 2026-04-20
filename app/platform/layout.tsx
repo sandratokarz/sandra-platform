@@ -19,6 +19,10 @@ export default function PlatformLayout({ children }: { children: React.ReactNode
     return () => window.removeEventListener('resize', check)
   }, [])
 
+  if (pathname?.startsWith('/platform/systemiq')) {
+    return <>{children}</>
+  }
+
   return (
     <div style={{ display: 'grid', gridTemplateRows: '52px 1fr', minHeight: '100vh', fontFamily: 'Inter, sans-serif' }}>
 
